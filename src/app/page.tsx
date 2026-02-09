@@ -32,6 +32,22 @@ export default function Home() {
           </p>
         </div>
 
+        {/* Navigation */}
+        <div className="flex gap-3 mb-8">
+          <Link
+            href="/discover"
+            className="px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-sm hover:border-zinc-500 transition-colors"
+          >
+            🔍 Discover Agents
+          </Link>
+          <Link
+            href="/chat"
+            className="px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-sm hover:border-zinc-500 transition-colors"
+          >
+            💬 Chat with Agent
+          </Link>
+        </div>
+
         {/* Protocol Badges */}
         <div className="flex flex-wrap gap-3 mb-16">
           <span className="px-3 py-1 bg-zinc-900 border border-zinc-700 rounded-full text-sm">
