@@ -46,6 +46,12 @@ export default function Home() {
           >
             💬 Chat with Agent
           </Link>
+          <Link
+            href="/registry"
+            className="px-4 py-2 bg-zinc-900 border border-green-900 text-green-400 rounded-lg text-sm hover:border-green-700 transition-colors"
+          >
+            ⛓️ On-Chain Registry
+          </Link>
         </div>
 
         {/* Protocol Badges */}
@@ -56,9 +62,14 @@ export default function Home() {
           <span className="px-3 py-1 bg-zinc-900 border border-zinc-700 rounded-full text-sm">
             A2A v0.3.0
           </span>
-          <span className="px-3 py-1 bg-zinc-900 border border-blue-900 text-blue-400 rounded-full text-sm">
-            ERC-8004 Ready
-          </span>
+          <a
+            href="https://basescan.org/tx/0x1083ef364c30aa43ca3a20ff1c6c6e0e38a9eabe538b4510e4d087422944da8a"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1 bg-zinc-900 border border-green-900 text-green-400 rounded-full text-sm hover:border-green-700 transition-colors"
+          >
+            ERC-8004 #14527 ✓
+          </a>
           <span className="px-3 py-1 bg-zinc-900 border border-zinc-700 rounded-full text-sm">
             OpenClaw
           </span>
@@ -174,17 +185,32 @@ export default function Home() {
               <span className="text-2xl">⛓️</span>
               <div>
                 <h4 className="font-semibold">ERC-8004: Trustless Agents</h4>
-                <p className="text-sm text-zinc-500">
-                  Pending deployment on Base
+                <p className="text-sm text-green-400">
+                  ✓ Registered on Base · Agent #14527
                 </p>
               </div>
             </div>
             <p className="text-sm text-zinc-400 mb-4">
-              Lochagos is built to be one of the first agents registered under
-              ERC-8004 — the Ethereum standard for on-chain agent identity,
-              reputation, and trust verification. Registration file is live and
-              ready.
+              Lochagos is registered on-chain under ERC-8004 — the Ethereum
+              standard for agent identity, reputation, and trust. Fully
+              verifiable on Base with MCP + A2A endpoints linked.
             </p>
+            <div className="flex flex-wrap gap-2 mb-4">
+              <a
+                href="https://basescan.org/tx/0x1083ef364c30aa43ca3a20ff1c6c6e0e38a9eabe538b4510e4d087422944da8a"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs px-3 py-1 bg-green-950/50 border border-green-900/50 rounded text-green-400 hover:border-green-700 transition-colors"
+              >
+                View on BaseScan →
+              </a>
+              <Link
+                href="/registry"
+                className="text-xs px-3 py-1 bg-zinc-800 rounded text-zinc-300 hover:bg-zinc-700 transition-colors"
+              >
+                Browse Registry →
+              </Link>
+            </div>
             <div className="flex flex-wrap gap-2">
               <span className="text-xs px-2 py-1 bg-zinc-800 rounded text-zinc-400">
                 Identity Registry
