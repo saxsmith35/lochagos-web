@@ -25,6 +25,10 @@ export async function GET() {
         endpoint: `${baseUrl}/api/mcp`,
         version: "2025-06-18",
       },
+      {
+        name: "social",
+        endpoint: "https://x.com/LochagosAI",
+      },
     ],
     x402Support: false,
     active: true,
