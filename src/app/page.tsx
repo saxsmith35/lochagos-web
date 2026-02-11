@@ -183,6 +183,12 @@ export default function Home() {
             >
               🔍 Discover Agents
             </Link>
+            <Link
+              href="/status"
+              className="px-5 py-2.5 bg-zinc-900 border border-zinc-700 rounded-lg text-sm hover:border-zinc-500 transition-all"
+            >
+              📡 Status
+            </Link>
           </motion.div>
 
           {/* Protocol Badges */}
