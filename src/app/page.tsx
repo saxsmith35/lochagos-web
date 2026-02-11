@@ -192,7 +192,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.5 }}
           >
-            {["MCP v2024-11-05", "A2A v0.3.0", "OpenClaw", "ElevenLabs ConvAI"].map(
+            {["MCP v2024-11-05", "A2A v0.3.0", "OpenClaw"].map(
               (badge) => (
                 <span
                   key={badge}
@@ -356,16 +356,6 @@ export default function Home() {
         </section>
 
       </main>
-
-      {/* Voice Widget */}
-      <div
-        dangerouslySetInnerHTML={{
-          __html: `
-            <elevenlabs-convai agent-id="agent_8601kh74vhzxene9bk4dzm26xtp8"></elevenlabs-convai>
-            <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
-          `,
-        }}
-      />
 
       {/* Footer */}
       <footer className="border-t border-zinc-800/30 px-6 py-8">
