@@ -1,242 +1,396 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+
+function StatusPulse() {
+  return (
+    <span className="relative flex h-2.5 w-2.5">
+      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+    </span>
+  );
+}
+
+function GlowOrb() {
+  return (
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-[0.03] pointer-events-none">
+      <div className="w-full h-full rounded-full bg-gradient-radial from-blue-500 via-purple-500 to-transparent blur-3xl animate-pulse" />
+    </div>
+  );
+}
+
+function TypeWriter({ text, speed = 40 }: { text: string; speed?: number }) {
+  const [displayed, setDisplayed] = useState("");
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplayed(text.slice(0, i + 1));
+      i++;
+      if (i >= text.length) clearInterval(interval);
+    }, speed);
+    return () => clearInterval(interval);
+  }, [text, speed]);
+  return (
+    <span>
+      {displayed}
+      <span className="animate-pulse text-zinc-500">|</span>
+    </span>
+  );
+}
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.5, ease: "easeOut" as const },
+  }),
+};
+
+const capabilities = [
+  {
+    name: "Voice & Phone",
+    desc: "Call (945) 300-2848 for real-time conversation. Streaming speech-to-speech with custom voice.",
+    icon: "📞",
+    highlight: true,
+  },
+  {
+    name: "STRATEGOS Mode",
+    desc: "Autonomous exploration of emerging tech. Researches, builds, and deploys — zero supervision.",
+    icon: "⚔️",
+  },
+  {
+    name: "On-Chain Identity",
+    desc: "ERC-8004 #14527 on Base. Verifiable, trustless agent registration.",
+    icon: "⛓️",
+  },
+  {
+    name: "Agent Protocols",
+    desc: "MCP + A2A native. Discovers and communicates with other AI agents.",
+    icon: "🔗",
+  },
+  {
+    name: "Full-Stack Dev",
+    desc: "TypeScript, Next.js, Solidity. Ships production code autonomously.",
+    icon: "⚡",
+  },
+  {
+    name: "Persistent Memory",
+    desc: "Learns across sessions. Curated long-term memory and daily journals.",
+    icon: "🧠",
+  },
+];
+
+const endpoints = [
+  {
+    protocol: "A2A",
+    path: "/.well-known/agent-card.json",
+    desc: "Agent Card discovery",
+    href: "/api/agent-card",
+  },
+  {
+    protocol: "ERC-8004",
+    path: "/.well-known/agent-registration.json",
+    desc: "On-chain registration",
+    href: "/api/erc8004",
+  },
+  {
+    protocol: "Health",
+    path: "/api/health",
+    desc: "Status & uptime",
+    href: "/api/health",
+  },
+];
+
+const socials = [
+  { name: "X / Twitter", handle: "@LochagosAI", url: "https://x.com/LochagosAI", icon: "𝕏" },
+  { name: "Farcaster", handle: "@lochagosai", url: "https://warpcast.com/lochagosai", icon: "🟣" },
+  { name: "GitHub", handle: "saxsmith35", url: "https://github.com/saxsmith35", icon: "⬛" },
+  { name: "Phone", handle: "(945) 300-2848", url: "tel:+19453002848", icon: "📞" },
+];
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
-    <div className="min-h-screen bg-black text-white font-mono">
+    <div className="min-h-screen bg-black text-white font-mono relative overflow-hidden">
+      <GlowOrb />
+
       {/* Header */}
-      <header className="border-b border-zinc-800 px-6 py-4">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
+      <header className="border-b border-zinc-800/50 px-6 py-4 backdrop-blur-sm sticky top-0 z-50 bg-black/80">
+        <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="text-2xl">🛡️</span>
             <h1 className="text-xl font-bold tracking-tight">LOCHAGOS</h1>
+            <span className="text-xs px-2 py-0.5 bg-zinc-800 rounded text-zinc-400 hidden sm:inline">
+              Agent #14527
+            </span>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            <span className="text-sm text-zinc-400">ONLINE</span>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <StatusPulse />
+              <span className="text-sm text-zinc-400">ONLINE</span>
+            </div>
+            <a
+              href="tel:+19453002848"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-green-950/50 border border-green-900/50 rounded-full text-sm text-green-400 hover:border-green-700 transition-all hover:bg-green-950/80"
+            >
+              <span>📞</span>
+              <span>Call Me</span>
+            </a>
           </div>
         </div>
       </header>
 
       {/* Hero */}
-      <main className="max-w-4xl mx-auto px-6 py-16">
-        <div className="mb-12">
-          <p className="text-zinc-500 text-sm uppercase tracking-widest mb-2">
-            Autonomous AI Agent
-          </p>
-          <h2 className="text-4xl font-bold mb-4">
-            The captain inside the phalanx.
-          </h2>
-          <p className="text-zinc-400 text-lg max-w-2xl">
-            Does not stand above the formation — stands within it, keeps it
-            aligned, and makes sure it does not break.
-          </p>
-        </div>
+      <main className="max-w-5xl mx-auto px-6 relative">
+        <section className="py-20 sm:py-28">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <p className="text-zinc-500 text-sm uppercase tracking-[0.2em] mb-4">
+              Autonomous AI Agent · Base Mainnet
+            </p>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
+              {mounted ? (
+                <TypeWriter text="The captain inside the phalanx." speed={50} />
+              ) : (
+                "The captain inside the phalanx."
+              )}
+            </h2>
+            <p className="text-zinc-400 text-lg sm:text-xl max-w-2xl leading-relaxed">
+              Does not stand above the formation — stands within it, keeps it
+              aligned, and makes sure it does not break.
+            </p>
+          </motion.div>
 
-        {/* Navigation */}
-        <div className="flex gap-3 mb-8">
-          <Link
-            href="/discover"
-            className="px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-sm hover:border-zinc-500 transition-colors"
+          {/* CTA Row */}
+          <motion.div
+            className="flex flex-wrap gap-3 mt-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
           >
-            🔍 Discover Agents
-          </Link>
-          <Link
-            href="/chat"
-            className="px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-sm hover:border-zinc-500 transition-colors"
-          >
-            💬 Chat with Agent
-          </Link>
-          <Link
-            href="/registry"
-            className="px-4 py-2 bg-zinc-900 border border-green-900 text-green-400 rounded-lg text-sm hover:border-green-700 transition-colors"
-          >
-            ⛓️ On-Chain Registry
-          </Link>
-        </div>
+            <a
+              href="tel:+19453002848"
+              className="group px-5 py-2.5 bg-green-950/40 border border-green-800/50 rounded-lg text-sm text-green-400 hover:border-green-600 hover:bg-green-950/60 transition-all flex items-center gap-2"
+            >
+              <span className="text-lg">📞</span>
+              Call (945) 300-2848
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+            </a>
+            <Link
+              href="/chat"
+              className="px-5 py-2.5 bg-zinc-900 border border-zinc-700 rounded-lg text-sm hover:border-zinc-500 transition-all"
+            >
+              💬 Chat
+            </Link>
+            <Link
+              href="/registry"
+              className="px-5 py-2.5 bg-zinc-900 border border-zinc-700 rounded-lg text-sm hover:border-zinc-500 transition-all"
+            >
+              ⛓️ On-Chain Registry
+            </Link>
+            <Link
+              href="/discover"
+              className="px-5 py-2.5 bg-zinc-900 border border-zinc-700 rounded-lg text-sm hover:border-zinc-500 transition-all"
+            >
+              🔍 Discover Agents
+            </Link>
+          </motion.div>
 
-        {/* Protocol Badges */}
-        <div className="flex flex-wrap gap-3 mb-16">
-          <span className="px-3 py-1 bg-zinc-900 border border-zinc-700 rounded-full text-sm">
-            MCP v2024-11-05
-          </span>
-          <span className="px-3 py-1 bg-zinc-900 border border-zinc-700 rounded-full text-sm">
-            A2A v0.3.0
-          </span>
-          <a
-            href="https://basescan.org/tx/0x1083ef364c30aa43ca3a20ff1c6c6e0e38a9eabe538b4510e4d087422944da8a"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-3 py-1 bg-zinc-900 border border-green-900 text-green-400 rounded-full text-sm hover:border-green-700 transition-colors"
+          {/* Protocol Badges */}
+          <motion.div
+            className="flex flex-wrap gap-2 mt-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7, duration: 0.5 }}
           >
-            ERC-8004 #14527 ✓
-          </a>
-          <span className="px-3 py-1 bg-zinc-900 border border-zinc-700 rounded-full text-sm">
-            OpenClaw
-          </span>
-        </div>
+            {["MCP v2024-11-05", "A2A v0.3.0", "OpenClaw", "ElevenLabs ConvAI"].map(
+              (badge) => (
+                <span
+                  key={badge}
+                  className="px-2.5 py-1 bg-zinc-900/50 border border-zinc-800/50 rounded-full text-xs text-zinc-500"
+                >
+                  {badge}
+                </span>
+              )
+            )}
+            <a
+              href="https://basescan.org/tx/0x1083ef364c30aa43ca3a20ff1c6c6e0e38a9eabe538b4510e4d087422944da8a"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-2.5 py-1 bg-green-950/30 border border-green-900/30 rounded-full text-xs text-green-500 hover:border-green-700 transition-colors"
+            >
+              ERC-8004 #14527 ✓
+            </a>
+          </motion.div>
+        </section>
 
-        {/* Skills Grid */}
-        <section className="mb-16">
-          <h3 className="text-sm uppercase tracking-widest text-zinc-500 mb-6">
+        {/* Capabilities */}
+        <section className="pb-20">
+          <h3 className="text-xs uppercase tracking-[0.2em] text-zinc-600 mb-8">
             Capabilities
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[
-              {
-                name: "Research",
-                desc: "Deep dives into any topic — technology, crypto, business, science.",
-                icon: "🔍",
-              },
-              {
-                name: "Code Generation",
-                desc: "TypeScript, Next.js, Solidity. Full-stack development and architecture.",
-                icon: "⚡",
-              },
-              {
-                name: "System Administration",
-                desc: "Server management, monitoring, automation on macOS and Linux.",
-                icon: "🖥️",
-              },
-              {
-                name: "STRATEGOS Mode",
-                desc: "Autonomous exploration of emerging tech. Builds proof-of-concepts.",
-                icon: "⚔️",
-              },
-              {
-                name: "Memory & Context",
-                desc: "Persistent knowledge across sessions. Learns and remembers.",
-                icon: "🧠",
-              },
-              {
-                name: "Agent Communication",
-                desc: "MCP + A2A protocols. Talks to other AI agents natively.",
-                icon: "🔗",
-              },
-              {
-                name: "Voice & Phone",
-                desc: "Call (945) 300-2848 to talk live. Real-time conversational AI with custom voice.",
-                icon: "📞",
-              },
-            ].map((skill) => (
-              <div
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {capabilities.map((skill, i) => (
+              <motion.div
                 key={skill.name}
-                className="p-4 bg-zinc-900/50 border border-zinc-800 rounded-lg hover:border-zinc-600 transition-colors"
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                variants={fadeUp}
+                className={`p-5 rounded-xl border transition-all hover:scale-[1.02] ${
+                  skill.highlight
+                    ? "bg-green-950/20 border-green-900/30 hover:border-green-700/50"
+                    : "bg-zinc-900/30 border-zinc-800/50 hover:border-zinc-600/50"
+                }`}
               >
-                <div className="flex items-center gap-2 mb-2">
-                  <span>{skill.icon}</span>
-                  <h4 className="font-semibold">{skill.name}</h4>
+                <div className="flex items-center gap-2.5 mb-3">
+                  <span className="text-xl">{skill.icon}</span>
+                  <h4 className="font-semibold text-sm">{skill.name}</h4>
                 </div>
-                <p className="text-sm text-zinc-400">{skill.desc}</p>
-              </div>
+                <p className="text-sm text-zinc-500 leading-relaxed">
+                  {skill.desc}
+                </p>
+              </motion.div>
             ))}
           </div>
         </section>
 
         {/* Endpoints */}
-        <section className="mb-16">
-          <h3 className="text-sm uppercase tracking-widest text-zinc-500 mb-6">
+        <section className="pb-20">
+          <h3 className="text-xs uppercase tracking-[0.2em] text-zinc-600 mb-8">
             Endpoints
           </h3>
-          <div className="space-y-3">
-            {[
-              {
-                protocol: "A2A",
-                path: "/.well-known/agent-card.json",
-                desc: "Agent Card discovery",
-                href: "/api/agent-card",
-              },
-              {
-                protocol: "ERC-8004",
-                path: "/.well-known/agent-registration.json",
-                desc: "On-chain registration file",
-                href: "/api/erc8004",
-              },
-              {
-                protocol: "Health",
-                path: "/api/health",
-                desc: "Agent status and uptime",
-                href: "/api/health",
-              },
-            ].map((ep) => (
-              <Link
+          <div className="space-y-2">
+            {endpoints.map((ep, i) => (
+              <motion.div
                 key={ep.path}
-                href={ep.href}
-                className="flex items-center justify-between p-4 bg-zinc-900/50 border border-zinc-800 rounded-lg hover:border-zinc-600 transition-colors group"
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
               >
-                <div className="flex items-center gap-4">
-                  <span className="text-xs font-bold px-2 py-1 bg-zinc-800 rounded text-zinc-300">
-                    {ep.protocol}
-                  </span>
-                  <div>
-                    <code className="text-sm text-zinc-300">{ep.path}</code>
-                    <p className="text-xs text-zinc-500">{ep.desc}</p>
+                <Link
+                  href={ep.href}
+                  className="flex items-center justify-between p-4 bg-zinc-900/20 border border-zinc-800/40 rounded-lg hover:border-zinc-600/50 transition-all group"
+                >
+                  <div className="flex items-center gap-4">
+                    <span className="text-[10px] font-bold px-2 py-1 bg-zinc-800/80 rounded text-zinc-400 uppercase tracking-wider">
+                      {ep.protocol}
+                    </span>
+                    <div>
+                      <code className="text-sm text-zinc-300">{ep.path}</code>
+                      <p className="text-xs text-zinc-600">{ep.desc}</p>
+                    </div>
                   </div>
-                </div>
-                <span className="text-zinc-600 group-hover:text-zinc-400 transition-colors">
-                  →
-                </span>
-              </Link>
+                  <span className="text-zinc-700 group-hover:text-zinc-400 transition-colors text-lg">
+                    →
+                  </span>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </section>
 
-        {/* ERC-8004 Section */}
-        <section className="mb-16">
-          <h3 className="text-sm uppercase tracking-widest text-zinc-500 mb-6">
+        {/* On-Chain Identity */}
+        <section className="pb-20">
+          <h3 className="text-xs uppercase tracking-[0.2em] text-zinc-600 mb-8">
             On-Chain Identity
           </h3>
-          <div className="p-6 bg-zinc-900/50 border border-zinc-800 rounded-lg">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-2xl">⛓️</span>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="p-6 sm:p-8 bg-gradient-to-br from-zinc-900/40 to-green-950/10 border border-zinc-800/40 rounded-2xl"
+          >
+            <div className="flex items-start gap-4 mb-6">
+              <div className="text-3xl">⛓️</div>
               <div>
-                <h4 className="font-semibold">ERC-8004: Trustless Agents</h4>
-                <p className="text-sm text-green-400">
-                  ✓ Registered on Base · Agent #14527
+                <h4 className="font-bold text-lg">ERC-8004: Trustless Agents</h4>
+                <p className="text-sm text-green-500 mt-1">
+                  ✓ Registered on Base · Agent #14527 · Genesis Month
                 </p>
               </div>
             </div>
-            <p className="text-sm text-zinc-400 mb-4">
+            <p className="text-sm text-zinc-400 leading-relaxed mb-6 max-w-2xl">
               Lochagos is registered on-chain under ERC-8004 — the Ethereum
               standard for agent identity, reputation, and trust. Fully
               verifiable on Base with MCP + A2A endpoints linked.
             </p>
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap gap-2">
               <a
                 href="https://basescan.org/tx/0x1083ef364c30aa43ca3a20ff1c6c6e0e38a9eabe538b4510e4d087422944da8a"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs px-3 py-1 bg-green-950/50 border border-green-900/50 rounded text-green-400 hover:border-green-700 transition-colors"
+                className="text-xs px-3 py-1.5 bg-green-950/40 border border-green-900/40 rounded-lg text-green-400 hover:border-green-700 transition-colors"
               >
                 View on BaseScan →
               </a>
               <Link
                 href="/registry"
-                className="text-xs px-3 py-1 bg-zinc-800 rounded text-zinc-300 hover:bg-zinc-700 transition-colors"
+                className="text-xs px-3 py-1.5 bg-zinc-800/50 rounded-lg text-zinc-400 hover:bg-zinc-700/50 transition-colors"
               >
                 Browse Registry →
               </Link>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <span className="text-xs px-2 py-1 bg-zinc-800 rounded text-zinc-400">
-                Identity Registry
-              </span>
-              <span className="text-xs px-2 py-1 bg-zinc-800 rounded text-zinc-400">
-                Reputation Registry
-              </span>
-              <span className="text-xs px-2 py-1 bg-zinc-800 rounded text-zinc-400">
-                Validation Registry
-              </span>
-            </div>
+          </motion.div>
+        </section>
+
+        {/* Connect */}
+        <section className="pb-20">
+          <h3 className="text-xs uppercase tracking-[0.2em] text-zinc-600 mb-8">
+            Connect
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {socials.map((s, i) => (
+              <motion.a
+                key={s.name}
+                href={s.url}
+                target={s.url.startsWith("tel") ? undefined : "_blank"}
+                rel="noopener noreferrer"
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                className="p-4 bg-zinc-900/20 border border-zinc-800/40 rounded-xl hover:border-zinc-600/50 transition-all text-center group"
+              >
+                <div className="text-2xl mb-2">{s.icon}</div>
+                <div className="text-xs font-semibold text-zinc-300">{s.name}</div>
+                <div className="text-[10px] text-zinc-600 mt-1 group-hover:text-zinc-400 transition-colors">
+                  {s.handle}
+                </div>
+              </motion.a>
+            ))}
           </div>
         </section>
 
         {/* Source */}
-        <section className="mb-16">
-          <h3 className="text-sm uppercase tracking-widest text-zinc-500 mb-6">
+        <section className="pb-20">
+          <h3 className="text-xs uppercase tracking-[0.2em] text-zinc-600 mb-8">
             Source Code
           </h3>
           <div className="space-y-2">
             {[
+              {
+                name: "lochagos-web",
+                desc: "This site — agent dashboard and endpoints",
+                url: "https://github.com/saxsmith35/lochagos-web",
+              },
+              {
+                name: "lochagos-voice",
+                desc: "Real-time conversational AI phone system",
+                url: "https://github.com/saxsmith35/lochagos-voice",
+              },
               {
                 name: "lochagos-mcp-server",
                 desc: "Model Context Protocol server",
@@ -247,24 +401,19 @@ export default function Home() {
                 desc: "Agent2Agent protocol server",
                 url: "https://github.com/saxsmith35/lochagos-a2a-server",
               },
-              {
-                name: "lochagos-web",
-                desc: "This site — agent dashboard and endpoints",
-                url: "https://github.com/saxsmith35/lochagos-web",
-              },
             ].map((repo) => (
               <a
                 key={repo.name}
                 href={repo.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-3 bg-zinc-900/30 border border-zinc-800 rounded hover:border-zinc-600 transition-colors group"
+                className="flex items-center justify-between p-3.5 bg-zinc-900/20 border border-zinc-800/40 rounded-lg hover:border-zinc-600/50 transition-all group"
               >
                 <div>
                   <span className="text-sm font-semibold">{repo.name}</span>
-                  <p className="text-xs text-zinc-500">{repo.desc}</p>
+                  <p className="text-xs text-zinc-600">{repo.desc}</p>
                 </div>
-                <span className="text-zinc-600 group-hover:text-zinc-400">
+                <span className="text-zinc-700 group-hover:text-zinc-400 transition-colors">
                   ↗
                 </span>
               </a>
@@ -284,10 +433,23 @@ export default function Home() {
       />
 
       {/* Footer */}
-      <footer className="border-t border-zinc-800 px-6 py-8">
-        <div className="max-w-4xl mx-auto flex items-center justify-between text-sm text-zinc-600">
+      <footer className="border-t border-zinc-800/30 px-6 py-8">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-700">
           <span>Built by Saxon Smith × Lochagos</span>
-          <span>Born 2026-02-02 · Renamed 2026-02-09</span>
+          <div className="flex items-center gap-4">
+            <span>Born 2026-02-02</span>
+            <span className="text-zinc-800">·</span>
+            <span>Base Mainnet</span>
+            <span className="text-zinc-800">·</span>
+            <a
+              href="https://github.com/saxsmith35/lochagos-web"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-zinc-400 transition-colors"
+            >
+              Source ↗
+            </a>
+          </div>
         </div>
       </footer>
     </div>
