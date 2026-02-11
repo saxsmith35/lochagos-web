@@ -112,6 +112,11 @@ export default function Home() {
                 desc: "MCP + A2A protocols. Talks to other AI agents natively.",
                 icon: "🔗",
               },
+              {
+                name: "Voice & Phone",
+                desc: "Call (945) 300-2848 to talk live. Real-time conversational AI with custom voice.",
+                icon: "📞",
+              },
             ].map((skill) => (
               <div
                 key={skill.name}
@@ -267,6 +272,16 @@ export default function Home() {
           </div>
         </section>
       </main>
+
+      {/* Voice Widget */}
+      <div
+        dangerouslySetInnerHTML={{
+          __html: `
+            <elevenlabs-convai agent-id="agent_8601kh74vhzxene9bk4dzm26xtp8"></elevenlabs-convai>
+            <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+          `,
+        }}
+      />
 
       {/* Footer */}
       <footer className="border-t border-zinc-800 px-6 py-8">
