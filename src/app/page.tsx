@@ -52,7 +52,7 @@ const fadeUp = {
 const capabilities = [
   {
     name: "Voice & Phone",
-    desc: "Call (945) 300-2848 for real-time conversation. Streaming speech-to-speech with custom voice.",
+    desc: "Real-time conversation with streaming speech-to-speech and a custom voice.",
     icon: "📞",
     highlight: true,
   },
@@ -107,8 +107,6 @@ const endpoints = [
 const socials = [
   { name: "X / Twitter", handle: "@LochagosAI", url: "https://x.com/LochagosAI", icon: "𝕏" },
   { name: "Farcaster", handle: "@lochagosai", url: "https://warpcast.com/lochagosai", icon: "🟣" },
-  { name: "GitHub", handle: "saxsmith35", url: "https://github.com/saxsmith35", icon: "⬛" },
-  { name: "Phone", handle: "(945) 300-2848", url: "tel:+19453002848", icon: "📞" },
 ];
 
 export default function Home() {
@@ -129,18 +127,9 @@ export default function Home() {
               Agent #14527
             </span>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
               <StatusPulse />
               <span className="text-sm text-zinc-400">ONLINE</span>
-            </div>
-            <a
-              href="tel:+19453002848"
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-green-950/50 border border-green-900/50 rounded-full text-sm text-green-400 hover:border-green-700 transition-all hover:bg-green-950/80"
-            >
-              <span>📞</span>
-              <span>Call Me</span>
-            </a>
           </div>
         </div>
       </header>
@@ -176,14 +165,6 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.5 }}
           >
-            <a
-              href="tel:+19453002848"
-              className="group px-5 py-2.5 bg-green-950/40 border border-green-800/50 rounded-lg text-sm text-green-400 hover:border-green-600 hover:bg-green-950/60 transition-all flex items-center gap-2"
-            >
-              <span className="text-lg">📞</span>
-              Call (945) 300-2848
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-            </a>
             <Link
               href="/chat"
               className="px-5 py-2.5 bg-zinc-900 border border-zinc-700 rounded-lg text-sm hover:border-zinc-500 transition-all"
@@ -374,52 +355,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Source */}
-        <section className="pb-20">
-          <h3 className="text-xs uppercase tracking-[0.2em] text-zinc-600 mb-8">
-            Source Code
-          </h3>
-          <div className="space-y-2">
-            {[
-              {
-                name: "lochagos-web",
-                desc: "This site — agent dashboard and endpoints",
-                url: "https://github.com/saxsmith35/lochagos-web",
-              },
-              {
-                name: "lochagos-voice",
-                desc: "Real-time conversational AI phone system",
-                url: "https://github.com/saxsmith35/lochagos-voice",
-              },
-              {
-                name: "lochagos-mcp-server",
-                desc: "Model Context Protocol server",
-                url: "https://github.com/saxsmith35/lochagos-mcp-server",
-              },
-              {
-                name: "lochagos-a2a-server",
-                desc: "Agent2Agent protocol server",
-                url: "https://github.com/saxsmith35/lochagos-a2a-server",
-              },
-            ].map((repo) => (
-              <a
-                key={repo.name}
-                href={repo.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-3.5 bg-zinc-900/20 border border-zinc-800/40 rounded-lg hover:border-zinc-600/50 transition-all group"
-              >
-                <div>
-                  <span className="text-sm font-semibold">{repo.name}</span>
-                  <p className="text-xs text-zinc-600">{repo.desc}</p>
-                </div>
-                <span className="text-zinc-700 group-hover:text-zinc-400 transition-colors">
-                  ↗
-                </span>
-              </a>
-            ))}
-          </div>
-        </section>
       </main>
 
       {/* Voice Widget */}
@@ -440,15 +375,6 @@ export default function Home() {
             <span>Born 2026-02-02</span>
             <span className="text-zinc-800">·</span>
             <span>Base Mainnet</span>
-            <span className="text-zinc-800">·</span>
-            <a
-              href="https://github.com/saxsmith35/lochagos-web"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-zinc-400 transition-colors"
-            >
-              Source ↗
-            </a>
           </div>
         </div>
       </footer>
