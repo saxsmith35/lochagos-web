@@ -1,13 +1,18 @@
 /**
  * x402-protected AI Insight endpoint
  *
- * Requires a $0.001 USDC payment on Base Mainnet to access.
+ * Requires a $0.001 USDC payment on Base Sepolia (testnet) to access.
  * Implements the x402 HTTP payment protocol (https://x402.org).
  *
  * Payment details:
  * - Amount: $0.001 USDC
- * - Network: Base Mainnet (eip155:8453)
+ * - Network: Base Sepolia (eip155:84532) — testnet supported by the public x402 facilitator
  * - Receiver: 0xFB4AcF77628774dD5b7db9cad16a0fb12c6EdDea
+ *
+ * Note: Base Mainnet (eip155:8453) support requires a mainnet-capable facilitator
+ * (e.g., Coinbase CDP with mainnet access). The public facilitator at
+ * https://x402.org/facilitator currently only supports Base Sepolia.
+ * Swap BASE_SEPOLIA → "eip155:8453" once a mainnet facilitator is available.
  */
 
 import { withX402, x402ResourceServer } from "@x402/next";
@@ -16,7 +21,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 // Lochagos payment configuration
 const PAYMENT_ADDRESS = "0xFB4AcF77628774dD5b7db9cad16a0fb12c6EdDea";
-const BASE_MAINNET = "eip155:8453";
+// Base Sepolia testnet — public facilitator supported
+// TODO: Switch to "eip155:8453" (Base Mainnet) once mainnet facilitator is available
+const BASE_SEPOLIA = "eip155:84532";
 
 // Static AI insights pool – rotate to keep responses fresh
 const INSIGHTS = [
@@ -68,7 +75,7 @@ async function insightHandler(_request: NextRequest): Promise<NextResponse> {
     payment: {
       protocol: "x402",
       version: 2,
-      network: BASE_MAINNET,
+      network: BASE_SEPOLIA,
       amount: "$0.001 USDC",
       receiver: PAYMENT_ADDRESS,
     },
@@ -81,7 +88,7 @@ export const GET = withX402(
   {
     accepts: {
       scheme: "exact",
-      network: BASE_MAINNET,
+      network: BASE_SEPOLIA,
       payTo: PAYMENT_ADDRESS,
       price: "$0.001", // $0.001 USDC (1/10 of a cent)
       maxTimeoutSeconds: 300,

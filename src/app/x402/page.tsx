@@ -101,7 +101,7 @@ export default function X402DemoPage() {
             </a>
             . Each request costs{" "}
             <span className="text-yellow-400 font-bold">$0.001 USDC</span> on{" "}
-            <span className="text-blue-400">Base Mainnet</span>.
+            <span className="text-blue-400">Base Sepolia (testnet)</span>.
           </p>
         </div>
 
@@ -116,7 +116,7 @@ export default function X402DemoPage() {
           <div className="mt-3 space-y-1 text-xs text-gray-400">
             <p>
               <span className="text-gray-500">Network:</span>{" "}
-              <span className="text-blue-400">Base Mainnet (eip155:8453)</span>
+              <span className="text-blue-400">Base Sepolia (eip155:845322)</span>
             </p>
             <p>
               <span className="text-gray-500">Price:</span>{" "}
